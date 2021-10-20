@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddCourierIdToShippingsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('shippings', function (Blueprint $table) {
+            $table->unsignedBigInteger('courier_id')->nullable();
+            $table->foreign('courier_id')->references('id')->on('couriers')->onDelete('SET NULL');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('shippings', function (Blueprint $table) {
+            $table->dropColumn('courier_id');
+        });
+    }
+}
